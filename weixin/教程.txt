@@ -1,0 +1,201 @@
+1.app.js是脚本代码，用于监听处理小程序的生命周期函数，声明全局变量,调用框架等
+2.app.json是全局配置，配置小程序由那些页面组成。配置小程序的窗口背景色,此文件不可添加任何注释
+3.app.wxss是公共样式表
+其中app.js和app.json是必须的
+.js是脚本文件
+.json是配置文件
+.wxss是样式（类似于css）
+.wxml是页面结构文件
+
+微信小程序中的每个页面  路径+页面名   都要写在app.json的pages中，且pages的第一个页面必须是小程序的首页
+
+
+典型的app.js结构
+App({
+
+  /**
+   * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
+   */
+  onLaunch: function () {
+    
+  },
+
+  /**
+   * 当小程序启动，或从后台进入前台显示，会触发 onShow
+   */
+  onShow: function (options) {
+    
+  },
+
+  /**
+   * 当小程序从前台进入后台，会触发 onHide
+   */
+  onHide: function () {
+    
+  },
+
+  /**
+   * 当小程序发生脚本错误，或者 api 调用失败时，会触发 onError 并带上错误信息
+   */
+  onError: function (msg) {
+    
+  }
+})
+
+
+page.js的一个典型代码结构
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    
+  }
+})
+app.onLaunch->app.onSHow->page1.onLoad->page1.onShow->page1.onReady(此时打开了页面并且加载完毕)->page1.onHide->page2.onLoad->page2.onShow->page2.onReady(此时从第一个界面打开page2)->page2.onUnload->page2.onShow->.....->app.onUnload(关闭page2，返回page1.....退出小程序)
+
+每个小程序分为两个线程view 和 appServer
+view:用于解析渲染页面(wxml,wxss)
+appServer:负责运行js
+
+
+wx.getStorage:获取本地数据缓存
+wx.setStorage:设置本地缓存
+wx.clearStorage:清理本地缓存
+
+
+wx.request:发起网络请求
+    wx.request({
+      header:(cookie:''),
+      url:"",
+      data:{},
+      success:function(res){},
+      fail:function(res){}
+    });
+wx.uploadFile:上传文件
+wx.downloadFile:下载文件
+
+wx.navigateTo:新窗口打开页面
+wx.redirectTo:原窗口打开页面
+
+
+小程序页面有限制：最多5个
+在非全局（app.json）的配置中只能对小程序项目中的一个页面进行配置，只能设置window配置项(所以无需写window这个键值)的内容且会覆盖app.json中的配置项
+
+
+注册程序~App()方法
+    App接受一个object参数，用于制定小程序的生命周期函数
+    App方法有且仅有一个并且存在于app.js中
+    object参数:
+      见图 7App()的object参数
+    小程序只会在 在后台一定时间或者占用系统资源过高才会真的被销毁
+
+
+通过getApp()可以获取小程序的实例
+var appInstance = getApp()
+console.log(appInstance.globalData)
+注意不要再定义App()内的函数调用getApp()直接可以用this
+
+
+注册页面~Page()方法
+  用于注册一个页面.接受一个object参数，对于每个页面,此方法有且只有一个
+  存在于.js文件中
+  object参数:
+  见图8Page()的object参数
+  
+
+获取当前页面实例
+getCurrentPage()
+注意不要在onLaunch方法用这个，因为page还未生成
+
+初始化数据:
+初始化数据作为页面的第一次渲染，对象data会将以json形式由逻辑层(js集合)到视图层
+如
+wxml
+<view>{{text}}</view>
+<view>{{array[0].msg}}</view>
+
+page.js
+Page({
+  data:{
+    text:"init",
+    array:[{msg:"1"},{msg:"2"}]
+  }
+})
+
+见图9生命周期函数,页面相关事件处理函数，事件处理函数
+事件处理函数eg:
+wxml
+//绑定viewTap事件到view组件
+<view bindtap="viewTap">click</view>
+
+page.js
+Page({
+  viewTap:function(){
+    console.log('view tap')
+  }
+})
+
+页面数据(setData())的使用
+见图10
+
+page的生命周期
+图11
+

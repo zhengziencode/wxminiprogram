@@ -1,0 +1,19 @@
+<view>
+
+<view>{{sth}}</view>
+<view class='arraymsg'>{{array[0].msg}}</view>
+<view bindtap='tapMe'>click here</view>
+
+<view>{{normalData}}</view>
+<button bindtap='changeData'>change data</button>
+
+<view>{{arrayData[0].text}}</view>
+<button bindtap='changeArrayData'>change array</button>
+
+<view>{{obj.data}}</view>
+<button bindtap='changeobjData'>change obj data</button>
+
+<!--newField其实也是一个类，在data中不给他初始值就不会显示。点击按钮后更改他的数据就会出现了-->
+<view>{{newField.text}}</view>
+<button bindtap='addNewField'>add new data</button>
+</view>

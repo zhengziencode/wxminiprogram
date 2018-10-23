@@ -1,0 +1,27 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/demo/demo",
+    "pages/demo2/demo2"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black",
+    "enablePullDownRefresh":true
+  },
+  "tabBar":{
+    "list":[{"pagePath": "pages/index/index",
+        "text": "main paper"},{
+        "pagePath": "pages/logs/logs",
+        "text": "logs"
+      }],
+      "color":"red",
+      "selectedColor":"blue",
+      "backgroundColor":"green",
+      "borderStyle":"white",
+      "position":"top"
+  }
+}
